@@ -1,28 +1,11 @@
-#!/usr/bin/env python3
-from pathlib import Path
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-from nicegui import app, ui
-from nicegui.events import KeyEventArguments
+# Load an example dataset with long-form data
+df = sns.load_dataset("tips")
 
-folder = Path(__file__).parent / 'slides'  # image source: https://pixabay.com/
-files = sorted(f.name for f in folder.glob('*.jpg'))
-index = 0
-
-
-def handle_key(event: KeyEventArguments) -> None:
-    global index
-    if event.action.keydown:
-        if event.key.arrow_right:
-            index += 1
-        if event.key.arrow_left:
-            index -= 1
-        index = index % len(files)
-        slide.set_source(f'slides/{files[index]}')
-
-
-app.add_static_files('/slides', folder)  # serve all files in this folder
-slide = ui.image(f'slides/{files[index]}')  # show the first image
-ui.keyboard(on_key=handle_key)  # handle keyboard events
-
-ui.run(port=8000)
-         
+# Plot the responses for different events and regions
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.barplot(x="day", y="tip", hue="day", data=df)
+ax.get_legend().remove()            
+plt.show()             
