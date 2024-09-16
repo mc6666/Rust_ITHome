@@ -1,0 +1,1 @@
+cargo run ./yolo-v3.ot ./dog.jpg

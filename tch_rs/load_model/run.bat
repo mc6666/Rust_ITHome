@@ -1,0 +1,1 @@
+cargo run ..\model.pt tiger.jpg
